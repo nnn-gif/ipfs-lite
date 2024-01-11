@@ -6,10 +6,9 @@ package main
 import (
 	"context"
 	"fmt"
-	"io"
+	"os"
 
 	ipfslite "github.com/hsanjuan/ipfs-lite"
-	"github.com/ipfs/go-cid"
 	"github.com/libp2p/go-libp2p/core/crypto"
 	"github.com/multiformats/go-multiaddr"
 )
@@ -46,16 +45,25 @@ func main() {
 
 	lite.Bootstrap(ipfslite.DefaultBootstrapPeers())
 
-	c, _ := cid.Decode("QmWATWQ7fVPP2EFGu71UkfnqhYXDYH566qy47CnJDgvs8u")
-	rsc, err := lite.GetFile(ctx, c)
-	if err != nil {
-		panic(err)
-	}
-	defer rsc.Close()
-	content, err := io.ReadAll(rsc)
+	dat, _ := os.Open("file.txt")
+
+	n, err := lite.AddFile(ctx, dat, nil)
 	if err != nil {
 		panic(err)
 	}
 
-	fmt.Println(string(content))
+	fmt.Println(n)
+	// c, _ := cid.Decode("QmWATWQ7fVPP2EFGu71UkfnqhYXDYH566qy47CnJDgvs8u")
+	// rsc, err := lite.GetFile(ctx, c)
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// defer rsc.Close()
+	// content, err := io.ReadAll(rsc)
+	// if err != nil {
+	// 	panic(err)
+	// }
+	for {
+	}
+
 }
